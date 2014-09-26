@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="0px"
+    android:layout_margin="0px">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="200px"
+        android:id="@+id/on_call_drop"
+        android:src="@drawable/on_call_drop"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="0px"
+        android:clickable="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/on_call_drop"
+        android:id="@+id/linearLayout"
+        android:weightSum="1">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="0,1,2,3,4"
+            android:id="@+id/controlTable">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/activeRow"
+                android:layout_marginTop="0px">
+
+                <View
+                    android:id="@+id/dialerRectangleView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp"
+                    android:background="@drawable/on_call_active"/>
+                <View
+                    android:id="@+id/holdRectangleView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp"
+                    android:background="@drawable/on_call_active"/>
+                <View
+                    android:id="@+id/speakerRectangleView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp"
+                    android:background="@drawable/on_call_active"/>
+                <View
+                    android:id="@+id/muteRectangleView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp"
+                    android:background="@drawable/on_call_active"/>
+                <View
+                    android:id="@+id/addRectangleView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp"
+                    android:background="@drawable/on_call_active"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:id="@+id/controlRow"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/on_call_dialer"
+                    android:layout_gravity="center"
+                    android:src="@drawable/on_call_dialer"
+                    android:clickable="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/on_call_hold"
+                    android:layout_gravity="center"
+                    android:src="@drawable/on_call_hold"
+                    android:clickable="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/on_call_speaker"
+                    android:layout_gravity="center"
+                    android:src="@drawable/on_call_speaker"
+                    android:clickable="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/on_call_mute"
+                    android:src="@drawable/on_call_mute"
+                    android:clickable="true"
+                    android:layout_gravity="center" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/on_call_add"
+                    android:src="@drawable/on_call_add"
+                    android:clickable="true"
+                    android:layout_gravity="center" />
+
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/on_call_divider"
+        android:layout_above="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/on_call_line"
+        android:layout_marginBottom="-5px"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/on_call_divider">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true">
+
+            <Chronometer
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/on_call_time"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:textSize="40dp"
+                android:format="HH:MM:SS" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/on_call_caller_image"
+                android:layout_below="@+id/on_call_time"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/incoming_call_caller_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Linas Martusevicius"
+                android:id="@+id/on_call_caller_name"
+                android:layout_below="@+id/on_call_caller_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:textSize="50dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+370 679 43120"
+                android:id="@+id/on_call_caller_number"
+                android:layout_below="@+id/on_call_caller_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:textSize="35dp"
+                android:textColor="#6f6f6f"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

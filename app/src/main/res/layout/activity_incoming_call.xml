@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Incoming Call"
+        android:id="@+id/incomingCallLabel"
+        android:layout_marginTop="40dp"
+        android:textSize="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/callerImageView"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/incoming_call_caller"
+        android:layout_below="@+id/incomingCallLabel"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Linas Martusevicius"
+        android:id="@+id/contactNameLabel"
+        android:layout_marginTop="30dp"
+        android:textSize="30dp"
+        android:layout_below="@+id/callerImageView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+370 67943120"
+        android:id="@+id/contactNumberLabel"
+        android:layout_below="@+id/contactNameLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:textSize="20dp"
+        android:textColor="#6f6f6f"/>
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+
+        android:layout_below="@+id/contactNumberLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/space" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answerCallImageView"
+        android:layout_alignTop="@+id/space"
+        android:layout_toLeftOf="@+id/space"
+        android:layout_toStartOf="@+id/space"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/incoming_call_answer"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_alignTop="@+id/space"
+        android:layout_toRightOf="@+id/space"
+        android:layout_toEndOf="@+id/space"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/incoming_call_drop"/>
+
+
+</RelativeLayout>
