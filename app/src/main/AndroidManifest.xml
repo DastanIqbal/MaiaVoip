@@ -38,27 +38,26 @@
 
         <activity
             android:name=".StartActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name="com.inlusion.view.IncomingCallActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.inlusion.view.OnCallActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
 
-        <service
-            android:name="com.inlusion.controller.incoming.CallReceiver"
-            android:enabled="true"
-            android:exported="false" >
-        </service>
     </application>
 
 </manifest>

@@ -12,10 +12,6 @@ import android.widget.TextView;
 
 import com.inlusion.controller.outgoing.CallCenter;
 import com.inlusion.maiavoip.R;
-import com.inlusion.model.CurrentState;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Created by root on 14.9.24.
@@ -41,6 +37,8 @@ public class OnCallActivity extends Activity{
     ImageView dropButton;
 
     CallCenter cc;
+
+    int tickToClose = 0;
 
     private static OnCallActivity instance = null;
 
@@ -80,11 +78,11 @@ public class OnCallActivity extends Activity{
         addButton = (ImageView) findViewById(R.id.on_call_add);
         dropButton = (ImageView) findViewById(R.id.on_call_drop);
 
-        dialerIsActiveView = (View) findViewById(R.id.dialerRectangleView);
-        holdIsActiveView = (View) findViewById(R.id.holdRectangleView);
-        speakerIsActiveView = (View) findViewById(R.id.speakerRectangleView);
-        muteIsActiveView = (View) findViewById(R.id.muteRectangleView);
-        addIsActiveView = (View) findViewById(R.id.addRectangleView);
+        dialerIsActiveView = findViewById(R.id.dialerRectangleView);
+        holdIsActiveView = findViewById(R.id.holdRectangleView);
+        speakerIsActiveView = findViewById(R.id.speakerRectangleView);
+        muteIsActiveView = findViewById(R.id.muteRectangleView);
+        addIsActiveView = findViewById(R.id.addRectangleView);
 
         dialerIsActiveView.setVisibility(View.INVISIBLE);
         holdIsActiveView.setVisibility(View.INVISIBLE);
@@ -223,7 +221,11 @@ public class OnCallActivity extends Activity{
             public void onChronometerTick(Chronometer chronometer) {
                 if(cc.call==null){
                     callerName.setText("CALL ENDED");
-                    closeOnCallActivity();
+                    tickToClose++;
+                    if(tickToClose==5){
+                        closeOnCallActivity();
+                        tickToClose=0;
+                    }
                 }
             }
         });
@@ -232,11 +234,6 @@ public class OnCallActivity extends Activity{
 
     public void closeOnCallActivity(){
         super.finish();
-        try {
-            Thread.sleep(3000);
-        }catch (InterruptedException ie){
-            ie.printStackTrace();
-        }
     }
 
 
