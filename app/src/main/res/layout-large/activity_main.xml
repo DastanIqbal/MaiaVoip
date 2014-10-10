@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:id="@+id/tabRelativeLayout">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tabLinearLayout">
+
+        <ImageButton
+
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_tab_dialer"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:id="@+id/dialerTabButton" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_tab_contacts"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:id="@+id/contactsTabButton" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_tab_history"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:id="@+id/historyTabButton" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_tab_settings"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:id="@+id/settingsTabButton" />
+        </LinearLayout>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="6dp"
+        android:src="@drawable/rectangle_pink"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/activeTabIndicator" />
+</RelativeLayout>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:src="@drawable/rectangle_pink"
+        android:layout_below="@id/tabRelativeLayout"
+        android:id="@+id/tabBottomLine"/>
+
+    <android.support.v4.view.ViewPager
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/tabBottomLine">
+
+    </android.support.v4.view.ViewPager>
+</RelativeLayout>

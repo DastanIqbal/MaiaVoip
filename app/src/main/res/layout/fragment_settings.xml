@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/horizontal_divider"
+    android:showDividers="middle"
+    android:dividerPadding="1dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:clickable="true"
+        android:id="@+id/settings_register_ll"
+        android:focusable="false">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="Register with server"
+            android:id="@+id/settings_register_tv"
+            android:textSize="30dp"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:fontFamily="sans-serif"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:clickable="true"
+        android:id="@+id/settings_unregister_ll">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="Unregister from server"
+            android:id="@+id/settings_unregister_tv"
+            android:textSize="30dp"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="0px"
+    android:layout_margin="0px"
+    android:background="@android:color/white">
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:id="@+id/on_call_drop"
+        android:background="@drawable/on_call_drop_selector"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_drop"
+        android:clickable="true"
+        android:padding="0dp"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/on_call_drop"
+        android:id="@+id/linearLayout"
+        android:background="@android:color/white"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_dialer"
+            android:background="@drawable/on_call_control_selector"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_dialer"
+            android:adjustViewBounds="true"
+            android:paddingTop="18dp"
+            android:paddingBottom="22dp"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_hold"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_hold"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:paddingTop="20dp"
+            android:paddingBottom="24dp"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_speaker"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_speaker"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:paddingTop="12dp"
+            android:paddingBottom="16dp"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_mute"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_mute"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:paddingTop="16dp"
+            android:paddingBottom="20dp"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_add"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_add_peer"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:layout_above="@+id/linearLayout">
+
+            <Chronometer
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/on_call_time"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:textSize="30dp"
+                android:format="HH:MM:SS" />
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/on_call_caller_image"
+                android:layout_below="@+id/on_call_time"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/incoming_call_caller_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unknown contact"
+                android:id="@+id/on_call_caller_name"
+                android:textSize="30dp"
+                android:textAlignment="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/on_call_caller_image"
+                android:layout_marginTop="30dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+370 679 43120"
+                android:id="@+id/on_call_caller_number"
+                android:layout_below="@+id/on_call_caller_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:textSize="35dp"
+                android:textColor="#6f6f6f"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -3,16 +3,18 @@ package com.inlusion.maiavoip;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.sip.SipAudioCall;
 import android.net.sip.SipException;
 import android.net.sip.SipManager;
+import android.net.sip.SipProfile;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.inlusion.controller.incoming.IncomingCallBCR;
 import com.inlusion.controller.outgoing.CallCenter;
 import com.inlusion.controller.util.RegistrarUtils;
 import com.inlusion.model.Manager;
@@ -30,13 +32,12 @@ public class StartActivity extends Activity {
     Button registerButton;
     Button unregisterButton;
     Button callButton;
-    Button dropCallButton;
+    TextView contactFieldTextView;
     Button incomingCallButton;
 
     View.OnClickListener registerButtonListener;
     View.OnClickListener unregisterButtonListener;
     View.OnClickListener callButtonListener;
-    View.OnClickListener dropCallButtonListener;
     View.OnClickListener incomingCallButtonListener;
 
     @Override
@@ -47,8 +48,8 @@ public class StartActivity extends Activity {
         registerButton = (Button) findViewById(R.id.registerButton);
         unregisterButton = (Button) findViewById(R.id.unregisterButton);
         callButton = (Button) findViewById(R.id.callButton);
-        dropCallButton = (Button) findViewById(R.id.dropCallButton);
         incomingCallButton = (Button) findViewById(R.id.incomingCallButton);
+        contactFieldTextView = (TextView) findViewById(R.id.contactFieldTextView);
 
         managerClass = new Manager(this);
         managerClass.createSipManager();
@@ -59,6 +60,7 @@ public class StartActivity extends Activity {
         getNetworkClass(this);
 
         ru = new RegistrarUtils();
+
         cc = CallCenter.getInstance();
         cc.setContext(this);
 
@@ -70,7 +72,6 @@ public class StartActivity extends Activity {
 
         cc.run();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,6 +100,12 @@ public class StartActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        try {
+            unregisterAcc();
+            manager.close(managerClass.getActiveLocalProfile().getUriString());
+        }catch(SipException sipex){
+            sipex.printStackTrace();
+        }
     }
 
     private void initProfile(){
@@ -108,6 +115,7 @@ public class StartActivity extends Activity {
             ru.setManager(managerClass.getSipManager());
             ru.setProfile(managerClass.getActiveLocalProfile());
             ru.setRegListener(managerClass.getRegistrationListener());
+
             System.out.println("=== PROFILE IS OPEN: "+manager.isOpened(managerClass.getActiveLocalProfile().getUriString()));
         }catch (SipException sipex){
             System.out.println("--- SIPEX IN START ACTIVITY ON CREATE");
@@ -130,38 +138,31 @@ public class StartActivity extends Activity {
         registerButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ru.setAction(true);
-                ru.run();
+                registerAcc();
             }
         };
 
         unregisterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ru.setAction(false);
-                ru.run();
+                unregisterAcc();
             }
         };
         callButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //cc.run();
-                cc.requestCall();
+                cc.requestCall(contactFieldTextView.getText().toString());
             }
         };
 
-        dropCallButtonListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                    cc.endCurrentCall();
-            }
-        };
         final Intent intentIC = new Intent(this, IncomingCallActivity.class);
         incomingCallButtonListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 startActivity(intentIC);
+                //System.out.println("=== CC INSTANCE= "+cc.toString());
             }
         };
     }
@@ -170,7 +171,6 @@ public class StartActivity extends Activity {
         registerButton.setOnClickListener(registerButtonListener);
         unregisterButton.setOnClickListener(unregisterButtonListener);
         callButton.setOnClickListener(callButtonListener);
-        dropCallButton.setOnClickListener(dropCallButtonListener);
         incomingCallButton.setOnClickListener(incomingCallButtonListener);
     }
 
@@ -217,5 +217,13 @@ public class StartActivity extends Activity {
         return this;
     }
 
+    public void registerAcc(){
+        ru.setAction(true);
+        ru.run();
+    }
 
+    public void unregisterAcc(){
+        ru.setAction(false);
+        ru.run();
+    }
 }

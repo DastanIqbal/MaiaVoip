@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
     tools:context=".StartActivity">
 
     <Button
@@ -32,28 +32,12 @@
         android:layout_alignEnd="@+id/registerButton" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Call"
         android:id="@+id/callButton"
-        android:layout_below="@+id/unregisterButton"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/unregisterButton"
-        android:layout_alignEnd="@+id/unregisterButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Drop Call"
-        android:id="@+id/dropCallButton"
-        android:layout_below="@+id/callButton"
-        android:layout_marginTop="10dp"
-        android:layout_alignRight="@+id/callButton"
-        android:layout_alignEnd="@+id/callButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/contactFieldTextView"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -61,6 +45,13 @@
         android:text="Show Inc Call"
         android:id="@+id/incomingCallButton"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/contactFieldTextView"
+        android:layout_below="@+id/unregisterButton"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

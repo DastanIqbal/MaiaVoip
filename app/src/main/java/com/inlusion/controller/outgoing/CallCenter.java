@@ -7,19 +7,24 @@ import android.net.sip.SipException;
 import android.net.sip.SipManager;
 import android.net.sip.SipProfile;
 
+import com.inlusion.maiavoip.StartActivity;
 import com.inlusion.model.CurrentState;
+import com.inlusion.view.IncomingCallActivity;
 import com.inlusion.view.OnCallActivity;
 
 /**
- * Created by root on 14.9.18.
+ * Created by Linas Martusevicius on 14.9.18.
  */
 public class CallCenter implements Runnable{
 
+    public boolean isRunning;
     private SipProfile localProfile;
     private SipManager manager;
 
     public SipAudioCall.Listener callListener;
     public SipAudioCall call;
+    public String currentPeerCallerID;
+    public String currentPeerCallerNumber;
 
     private static Context ctx;
 
@@ -27,12 +32,16 @@ public class CallCenter implements Runnable{
 
     CurrentState cs;
     Intent intentOC;
+    Intent intentIC;
 
     @Override
     public void run() {
+        isRunning = true;
         cs = CurrentState.getInstance();
         intentOC = new Intent(ctx, OnCallActivity.class);
+        intentIC = new Intent(ctx, IncomingCallActivity.class);
         createCallListener();
+        isRunning = false;
     }
 
     public CallCenter(Context ctx){
@@ -53,32 +62,47 @@ public class CallCenter implements Runnable{
             public void onRinging(SipAudioCall call, SipProfile caller) {
                 super.onRinging(call, caller);
                 System.out.println("+++ RING");
+                ctx.startActivity(intentIC);
+                try{
+                call.answerCall(30);
+                }catch(SipException sipex){
+                    sipex.printStackTrace();
+                }
             }
 
             @Override
             public void onRingingBack(SipAudioCall call) {
                 super.onRingingBack(call);
                 System.out.println("+++ RING BACK");
+                setCurrentCall(call);
             }
 
             @Override
             public void onCalling(SipAudioCall call) {
                 super.onCalling(call);
                 System.out.println("+++ CALLING");
+                setCurrentCall(call);
+                currentPeerCallerID = call.getPeerProfile().getDisplayName();
+                currentPeerCallerNumber = call.getPeerProfile().getUserName();
+                startOnCallActivity();
             }
 
             @Override
             public void onCallEstablished(SipAudioCall call) {
-                startOnCallActivity();
+                super.onCallEstablished(call);
+                //startOnCallActivity();
                 System.out.println("+++ CALL ESTABLISHED");
                 call.startAudio();
 
-                System.out.println("===IS MUTED?: "+call.isMuted());
-
+                System.out.println("=== IS MUTED?: "+call.isMuted());
                 if(call.isMuted()) {
                     call.toggleMute();
                 }
+                currentPeerCallerID = call.getPeerProfile().getDisplayName();
+                currentPeerCallerNumber = call.getPeerProfile().getUserName();
                 setCurrentCall(call);
+
+
             }
 
             @Override
@@ -89,9 +113,10 @@ public class CallCenter implements Runnable{
             @Override
             public void onCallEnded(SipAudioCall call) {
                 setCurrentCall(null);
+                currentPeerCallerID = null;
+                currentPeerCallerNumber = null;
                 System.out.println("+++ CALL ENDED");
             }
-
         };
     }
 
@@ -103,9 +128,9 @@ public class CallCenter implements Runnable{
         this.manager = manager;
     }
 
-    public void requestCall(){
+    public void requestCall(String to){
         try{
-            manager.makeAudioCall(localProfile.getUriString(),"sip:linassamsung@192.168.1.140",callListener,30);
+            manager.makeAudioCall(localProfile.getUriString(),"sip:"+to+"@192.168.1.140",callListener,30);
             //manager.makeAudioCall(localProfile.getUriString(),"sip:3726189105@91.203.29.131",callListener,30);
         }catch(SipException sipex){
             System.err.println("--- SIPEX in: controller.CallCenter=>requestCall" + sipex.getMessage());
@@ -137,4 +162,17 @@ public class CallCenter implements Runnable{
     public void startOnCallActivity(){
         ctx.startActivity(intentOC);
     }
+
+    public boolean getState(){
+        return isRunning;
+    }
+
+    public SipAudioCall.Listener getCallListener(){
+        return callListener;
+    }
+
+    public String getCurrentPeerCallerID(){
+        return currentPeerCallerID;
+    }
+
 }

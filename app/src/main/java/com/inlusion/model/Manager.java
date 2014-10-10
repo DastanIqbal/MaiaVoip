@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.sip.SipManager;
 import android.net.sip.SipProfile;
 import android.net.sip.SipRegistrationListener;
+import android.net.sip.SipSession;
 
 import com.inlusion.controller.util.IPResolver;
 
@@ -18,12 +19,14 @@ public class Manager {
     public LocalProfile localProfileClass;
     public SipRegistrationListener registrationListener;
     private static Manager instance = null;
+    SipSession.Listener sessionListener;
 
     public Manager(Context ctx){
         this.ctx = ctx;
 
         createSipManager();
 
+        //localProfileClass = new LocalProfile("linasandroid2", "android002","192.168.1.140");
         localProfileClass = new LocalProfile("linasAndroid", "android001","192.168.1.140");
 
         //localProfileClass = new LocalProfile("3726189103","kwi64fhe32","91.203.29.131");

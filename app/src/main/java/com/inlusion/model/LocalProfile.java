@@ -33,7 +33,9 @@ public class LocalProfile {
             builder.setProfileName(mUname);
             //builder.setProtocol("TCP");
             builder.setAutoRegistration(false);
-            builder.setDisplayName(mUname);
+            builder.setDisplayName("LINAS-ANDROID");
+            builder.setPort(5060);
+            //builder.setOutboundProxy("192.168.1.140");
             mLocalProfile = builder.build();
         }catch(ParseException pe){
             System.err.println("--- ERROR IN model.LocalProfile=>createLocalProfile(): "+pe.getMessage());

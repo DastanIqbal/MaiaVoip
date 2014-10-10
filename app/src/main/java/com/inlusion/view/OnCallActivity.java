@@ -1,17 +1,31 @@
 package com.inlusion.view;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.sip.SipException;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Vibrator;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Chronometer;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.inlusion.controller.outgoing.CallCenter;
 import com.inlusion.maiavoip.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by root on 14.9.24.
@@ -19,26 +33,33 @@ import com.inlusion.maiavoip.R;
 public class OnCallActivity extends Activity{
 
     Chronometer c;
-
-    View dialerIsActiveView;
-    View holdIsActiveView;
-    View speakerIsActiveView;
-    View muteIsActiveView;
-    View addIsActiveView;
-
-    TextView callerName;
-    TextView callerNumber;
-
-    ImageView dialerButton;
-    ImageView holdButton;
-    ImageView speakerButton;
-    ImageView muteButton;
-    ImageView addButton;
-    ImageView dropButton;
-
     CallCenter cc;
+    Vibrator vib;
+
+    public TextView callerName;
+    public TextView callerNumber;
+
+    ImageButton dialerButton;
+    ImageButton holdButton;
+    ImageButton speakerButton;
+    ImageButton muteButton;
+    ImageButton addPeerButton;
+    ImageButton dropCallButton;
+
+    ArrayList<ImageButton> active;
+
+    View.OnTouchListener dialerTouchListener;
+    View.OnTouchListener holdTouchListener;
+    View.OnTouchListener speakerTouchListener;
+    View.OnTouchListener muteTouchListener;
+    View.OnTouchListener addPeerTouchListener;
+
+    View.OnClickListener dropCallButtonListener;
+
 
     int tickToClose = 0;
+    boolean speakerMode = false;
+    long timeWhenStopped;
 
     private static OnCallActivity instance = null;
 
@@ -49,11 +70,11 @@ public class OnCallActivity extends Activity{
         return instance;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cc = CallCenter.getInstance();
+        vib = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         setContentView(R.layout.activity_on_call);
 
@@ -67,42 +88,28 @@ public class OnCallActivity extends Activity{
         callerName = (TextView) findViewById(R.id.on_call_caller_name);
         callerNumber = (TextView) findViewById(R.id.on_call_caller_number);
 
+        dialerButton = (ImageButton) findViewById(R.id.on_call_dialer);
+        holdButton = (ImageButton) findViewById(R.id.on_call_hold);
+        speakerButton = (ImageButton) findViewById(R.id.on_call_speaker);
+        muteButton = (ImageButton) findViewById(R.id.on_call_mute);
+        addPeerButton = (ImageButton) findViewById(R.id.on_call_add);
+        dropCallButton = (ImageButton) findViewById(R.id.on_call_drop);
+
+        active = new ArrayList<ImageButton>();
+
+        setColorToInactive(dialerButton);
+        setColorToInactive(holdButton);
+        setColorToInactive(speakerButton);
+        setColorToInactive(muteButton);
+        setColorToInactive(addPeerButton);
+
         c.setTypeface(roboto_regular);
         callerName.setTypeface(roboto_regular);
         callerNumber.setTypeface(roboto_light);
 
-        dialerButton = (ImageView) findViewById(R.id.on_call_dialer);
-        holdButton = (ImageView) findViewById(R.id.on_call_hold);
-        speakerButton = (ImageView) findViewById(R.id.on_call_speaker);
-        muteButton = (ImageView) findViewById(R.id.on_call_mute);
-        addButton = (ImageView) findViewById(R.id.on_call_add);
-        dropButton = (ImageView) findViewById(R.id.on_call_drop);
-
-        dialerIsActiveView = findViewById(R.id.dialerRectangleView);
-        holdIsActiveView = findViewById(R.id.holdRectangleView);
-        speakerIsActiveView = findViewById(R.id.speakerRectangleView);
-        muteIsActiveView = findViewById(R.id.muteRectangleView);
-        addIsActiveView = findViewById(R.id.addRectangleView);
-
-        dialerIsActiveView.setVisibility(View.INVISIBLE);
-        holdIsActiveView.setVisibility(View.INVISIBLE);
-        speakerIsActiveView.setVisibility(View.INVISIBLE);
-        muteIsActiveView.setVisibility(View.INVISIBLE);
-        addIsActiveView.setVisibility(View.INVISIBLE);
-
-        callerName.setText(cc.call.getPeerProfile().getDisplayName());
-        callerNumber.setText(cc.call.getPeerProfile().getUserName());
-
         setClickListeners();
 
-        //setUpCallTimer();
         startCallTimer();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
     }
 
     @Override
@@ -118,99 +125,146 @@ public class OnCallActivity extends Activity{
     }
 
     public void setClickListeners(){
-        View.OnClickListener dialerOnClickListener = new View.OnClickListener() {
+
+        dialerTouchListener = new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if(dialerIsActiveView.getVisibility()==View.INVISIBLE) {
-                    dialerIsActiveView.setVisibility(View.VISIBLE);
-                }else{
-                    dialerIsActiveView.setVisibility(View.INVISIBLE);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        dialerButton.getDrawable().mutate().setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
+                        dialerButton.setBackground(getResources().getDrawable(R.drawable.toggle_circle));
+                        vib.vibrate(50);
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        //DO STUFF
+
+                        dialerButton.setBackgroundColor(Color.TRANSPARENT);
                 }
+                return true;
             }
         };
 
-        View.OnClickListener holdOnClickListener = new View.OnClickListener() {
+        holdTouchListener = new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-             try {
-                 if (holdIsActiveView.getVisibility() == View.INVISIBLE) {
-                     holdIsActiveView.setVisibility(View.VISIBLE);
-                     cc.call.holdCall(0);
-                 } else {
-                     holdIsActiveView.setVisibility(View.INVISIBLE);
-                     cc.call.continueCall(0);
-                 }
-             }catch(SipException sipex){
-                 sipex.printStackTrace();
-             }
-            }
-        };
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        holdButton.getDrawable().mutate().setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
+                        holdButton.setBackground(getResources().getDrawable(R.drawable.toggle_circle));
+                        vib.vibrate(50);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        try {
+                            if (cc.call.isOnHold()) {
+                                setColorToInactive(holdButton);
+                                cc.call.continueCall(30);
+                                c.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
+                                c.start();
+                            } else {
+                                setColorToActive(holdButton);
+                                cc.call.holdCall(30);
+                                timeWhenStopped = c.getBase() - SystemClock.elapsedRealtime();
+                                c.stop();
+                            }
+                        }catch(SipException sipex){
+                            sipex.printStackTrace();
+                        }
+                        holdButton.setBackgroundColor(Color.TRANSPARENT);
 
-        View.OnClickListener speakerOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(cc.call!=null) {
-                    if (speakerIsActiveView.getVisibility() == View.INVISIBLE) {
-                        cc.call.setSpeakerMode(true);
-                        speakerIsActiveView.setVisibility(View.VISIBLE);
-                    } else {
-                        cc.call.setSpeakerMode(false);
-                        speakerIsActiveView.setVisibility(View.INVISIBLE);
-                    }
-                }else{
-                    closeOnCallActivity();
                 }
+                return true;
             }
         };
 
-        View.OnClickListener muteOnClickListener = new View.OnClickListener() {
+        speakerTouchListener = new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if(cc.call!=null) {
-                    cc.call.toggleMute();
-                    if (cc.call.isMuted()) {
-                        muteIsActiveView.setVisibility(View.VISIBLE);
-                    } else {
-                        muteIsActiveView.setVisibility(View.INVISIBLE);
-                    }
-                }else{
-                    closeOnCallActivity();
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        speakerButton.getDrawable().mutate().setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
+                        speakerButton.setBackground(getResources().getDrawable(R.drawable.toggle_circle));
+                        vib.vibrate(50);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if(!speakerMode){
+                            cc.call.setSpeakerMode(true);
+                            speakerMode=true;
+                            setColorToActive(speakerButton);
+                        }else{
+                            cc.call.setSpeakerMode(false);
+                            speakerMode=false;
+                            setColorToInactive(speakerButton);
+                        }
+                        speakerButton.setBackgroundColor(Color.TRANSPARENT);
                 }
-
+                return true;
             }
         };
 
-        View.OnClickListener addOnClickListener= new View.OnClickListener() {
+        muteTouchListener = new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if(addIsActiveView.getVisibility()==View.INVISIBLE) {
-                    addIsActiveView.setVisibility(View.VISIBLE);
-                }else{
-                    addIsActiveView.setVisibility(View.INVISIBLE);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        muteButton.getDrawable().mutate().setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
+                        muteButton.setBackground(getResources().getDrawable(R.drawable.toggle_circle));
+                        vib.vibrate(50);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if(cc.call.isMuted()){
+                            cc.call.toggleMute();
+                            setColorToInactive(muteButton);
+                        }else{
+                            cc.call.toggleMute();
+                            setColorToActive(muteButton);
+                        }
+                        muteButton.setBackgroundColor(Color.TRANSPARENT);
                 }
+                return true;
             }
         };
 
-        View.OnClickListener dropOnClickListener= new View.OnClickListener() {
+        addPeerTouchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        addPeerButton.getDrawable().mutate().setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
+                        addPeerButton.setBackground(getResources().getDrawable(R.drawable.toggle_circle));
+                        vib.vibrate(50);
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        //DO STUFF
+                        addPeerButton.setBackgroundColor(Color.TRANSPARENT);
+                }
+                return true;
+            }
+        };
+
+        dropCallButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vib.vibrate(50);
                 try {
-                    if(cc.call!=null){
+                    if (cc.call != null) {
                         cc.call.endCall();
                     }
-                    closeOnCallActivity();
                 }catch(SipException sipex){
                     sipex.printStackTrace();
                 }
             }
         };
 
-        dialerButton.setOnClickListener(dialerOnClickListener);
-        holdButton.setOnClickListener(holdOnClickListener);
-        speakerButton.setOnClickListener(speakerOnClickListener);
-        muteButton.setOnClickListener(muteOnClickListener);
-        addButton.setOnClickListener(addOnClickListener);
-        dropButton.setOnClickListener(dropOnClickListener);
+        dialerButton.setOnTouchListener(dialerTouchListener);
+        holdButton.setOnTouchListener(holdTouchListener);
+        speakerButton.setOnTouchListener(speakerTouchListener);
+        muteButton.setOnTouchListener(muteTouchListener);
+        addPeerButton.setOnTouchListener(addPeerTouchListener);
+
+        dropCallButton.setOnClickListener(dropCallButtonListener);
     }
 
     public void startCallTimer(){
@@ -219,6 +273,7 @@ public class OnCallActivity extends Activity{
         c.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
+
                 if(cc.call==null){
                     callerName.setText("CALL ENDED");
                     tickToClose++;
@@ -230,11 +285,28 @@ public class OnCallActivity extends Activity{
             }
         });
         c.start();
+        callerName.setText(cc.currentPeerCallerID);
+        callerNumber.setText(cc.currentPeerCallerNumber);
     }
 
     public void closeOnCallActivity(){
         super.finish();
     }
 
+    public void setColorToActive(ImageButton ib){
+        ib.getDrawable().mutate().setColorFilter(Color.rgb(242, 19, 144), PorterDuff.Mode.MULTIPLY);
+    }
+
+    public void setColorToInactive(ImageButton ib){
+        ib.getDrawable().mutate().setColorFilter(Color.rgb(68, 68, 68), PorterDuff.Mode.MULTIPLY);
+    }
+
+    public boolean getButtonState(ImageButton ib){
+        if(active.contains(ib)){
+            return true;
+        }else{
+            return false;
+        }
+    };
 
 }

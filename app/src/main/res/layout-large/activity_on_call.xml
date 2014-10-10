@@ -5,136 +5,92 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="0px"
-    android:layout_margin="0px">
+    android:layout_margin="0px"
+    android:background="@android:color/white">
 
-    <ImageView
+    <ImageButton
         android:layout_width="fill_parent"
-        android:layout_height="200px"
+        android:layout_height="80dp"
         android:id="@+id/on_call_drop"
-        android:src="@drawable/on_call_drop"
+        android:background="@drawable/on_call_drop_selector"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="0px"
-        android:clickable="true" />
+        android:src="@drawable/ic_drop"
+        android:clickable="true"
+        android:padding="0dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
+        android:paddingBottom="5dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/on_call_drop"
         android:id="@+id/linearLayout"
-        android:weightSum="1">
+        android:background="@android:color/white">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="0,1,2,3,4"
-            android:id="@+id/controlTable">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_dialer"
+            android:background="@drawable/on_call_control_selector"
+            android:layout_weight="1"
+            android:src="@drawable/ic_dialer"
+            android:paddingTop="33dp"
+            android:paddingBottom="33dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/activeRow"
-                android:layout_marginTop="0px">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_hold"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_hold"
+            android:paddingTop="37dp"
+            android:paddingBottom="37dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
 
-                <View
-                    android:id="@+id/dialerRectangleView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="10dp"
-                    android:background="@drawable/on_call_active"/>
-                <View
-                    android:id="@+id/holdRectangleView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="10dp"
-                    android:background="@drawable/on_call_active"/>
-                <View
-                    android:id="@+id/speakerRectangleView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="10dp"
-                    android:background="@drawable/on_call_active"/>
-                <View
-                    android:id="@+id/muteRectangleView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="10dp"
-                    android:background="@drawable/on_call_active"/>
-                <View
-                    android:id="@+id/addRectangleView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="10dp"
-                    android:background="@drawable/on_call_active"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_speaker"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_speaker"
+            android:paddingTop="26dp"
+            android:paddingBottom="26dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
 
-            </TableRow>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_mute"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_mute"/>
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:id="@+id/controlRow"
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/on_call_dialer"
-                    android:layout_gravity="center"
-                    android:src="@drawable/on_call_dialer"
-                    android:clickable="true" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/on_call_hold"
-                    android:layout_gravity="center"
-                    android:src="@drawable/on_call_hold"
-                    android:clickable="true" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/on_call_speaker"
-                    android:layout_gravity="center"
-                    android:src="@drawable/on_call_speaker"
-                    android:clickable="true" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/on_call_mute"
-                    android:src="@drawable/on_call_mute"
-                    android:clickable="true"
-                    android:layout_gravity="center" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/on_call_add"
-                    android:src="@drawable/on_call_add"
-                    android:clickable="true"
-                    android:layout_gravity="center" />
-
-            </TableRow>
-        </TableLayout>
-
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/on_call_add"
+            android:layout_weight="1"
+            android:background="@drawable/on_call_control_selector"
+            android:src="@drawable/ic_add_peer"
+            android:paddingTop="13dp"/>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/on_call_divider"
-        android:layout_above="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/on_call_line"
-        android:layout_marginBottom="-5px"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/on_call_divider">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true">
+        android:background="@android:color/transparent"
+        android:layout_above="@+id/linearLayout">
 
             <Chronometer
                 android:layout_width="wrap_content"
@@ -176,7 +132,7 @@
                 android:textSize="35dp"
                 android:textColor="#6f6f6f"/>
 
-        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>
