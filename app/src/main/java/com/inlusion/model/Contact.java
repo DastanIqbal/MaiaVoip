@@ -1,5 +1,6 @@
 package com.inlusion.model;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 /**
@@ -7,21 +8,21 @@ import android.net.Uri;
  */
 public class Contact implements Comparable{
 
-    Uri image;
+    Bitmap image;
     String name;
     String number;
 
-    public Contact(Uri aimage, String aname, String anumber){
+    public Contact(Bitmap aimage, String aname, String anumber){
         this.image = aimage;
         this.name = aname;
         this.number = anumber;
     }
 
-    public Uri getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(Uri image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 

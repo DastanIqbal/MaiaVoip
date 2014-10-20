@@ -2,24 +2,27 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="5dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingBottom="5dp"
-    android:background="@android:color/white">
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
 
     <com.inlusion.controller.util.RoundedImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/entry_contactImage"
         android:src="@drawable/incoming_call_caller"
         android:scaleType="fitXY"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         app:oval="true"/>
 
     <LinearLayout
@@ -27,7 +30,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:paddingTop="5dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
         android:paddingLeft="10dp"
         android:layout_gravity="center_vertical">
 
@@ -36,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="Linas Martusevicius"
             android:id="@+id/entry_contactName"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:fontFamily="sans-serif-light"/>
 
         <TextView
@@ -44,8 +48,9 @@
             android:layout_height="wrap_content"
             android:text="+370 679 43120"
             android:id="@+id/entry_contactNumber"
-            android:textSize="28dp"
+            android:textSize="18dp"
             android:textColor="#adadad"/>
+    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

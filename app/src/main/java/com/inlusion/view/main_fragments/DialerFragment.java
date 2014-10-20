@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -78,6 +77,7 @@ public class DialerFragment extends Fragment {
         editText.setInputType(InputType.TYPE_NULL);
         editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
         editText.setTextIsSelectable(true);
+
         backspaceButton =  (ImageButton) rootView.findViewById(R.id.dialer_backspace);
         addContactButton = (ImageButton) rootView.findViewById(R.id.add_contact_button);
         initiateCallButton = (ImageButton) rootView.findViewById(R.id.dialer_initiateCallButton);
@@ -106,7 +106,6 @@ public class DialerFragment extends Fragment {
         backspaceListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
                 backspace();
                 vib.vibrate(50);
             }

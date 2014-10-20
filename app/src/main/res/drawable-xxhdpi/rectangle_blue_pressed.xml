@@ -5,7 +5,7 @@
     android:shape="rectangle">
 
     <!-- Specify a semi-transparent solid green background color -->
-    <solid android:color="#ff03e1ef" />
+    <solid android:color="#0085da" />
 
     <!-- Specify the margins that all content inside the drawable must adhere to -->
     <padding

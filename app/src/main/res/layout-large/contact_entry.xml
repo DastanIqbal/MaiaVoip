@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="5dp"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.inlusion.controller.util.RoundedImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/entry_contactImage"
+            android:src="@drawable/incoming_call_caller"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            app:oval="true"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:paddingLeft="15dp"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Linas Mpqpqpartusevicius"
+                android:id="@+id/entry_contactName"
+                android:textSize="30dp"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginBottom="-0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+370 679 43120"
+                android:id="@+id/entry_contactNumber"
+                android:textSize="26dp"
+                android:textColor="#adadad"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:src="@drawable/vertical_divider"/>
+
+        <ImageButton
+            android:id="@+id/contact_contextmenu_button"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/context_menu_icon"
+            android:scaleType="fitCenter"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:layout_marginRight="5dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

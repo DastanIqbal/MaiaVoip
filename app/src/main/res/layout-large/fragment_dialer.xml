@@ -14,7 +14,7 @@
         android:layout_height="wrap_content" />
 
     <ImageButton
-        android:background="@drawable/dialer_call_selector"
+        android:background="@drawable/contact_blank_selector"
         android:layout_width="fill_parent"
         android:layout_height="80dp"
         android:padding="12dp"
@@ -28,7 +28,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="320dp"
         android:layout_above="@+id/dialer_initiateCallButton"
         android:layout_centerHorizontal="true"
         android:id="@+id/dialerVertLinearLayout">
@@ -481,7 +481,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_above="@+id/dialerVertLinearLayout"
         android:layout_centerHorizontal="true"
         android:id="@+id/linearLayout"
@@ -493,7 +493,13 @@
             android:id="@+id/add_contact_button"
             android:layout_weight="1"
             android:src="@drawable/ic_dialer_add_person"
-            android:background="@android:color/white"/>
+            android:background="@android:color/transparent"
+            android:paddingTop="22dp"
+            android:paddingBottom="13dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="-5dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
 
         <EditText
             android:layout_width="0dp"
@@ -518,8 +524,9 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_backspace"
-            android:background="@android:color/white"
-            android:id="@+id/dialer_backspace" />
+            android:background="@android:color/transparent"
+            android:id="@+id/dialer_backspace"
+            />
 
     </LinearLayout>
 
@@ -528,6 +535,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/filteredUserList"
         android:layout_above="@+id/linearLayout"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 
 </RelativeLayout>

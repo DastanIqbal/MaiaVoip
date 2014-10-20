@@ -3,7 +3,6 @@
     android:insetLeft="20dp"
     android:insetRight="20dp">
     <shape xmlns:android="http://schemas.android.com/apk/res/android">
-        <size android:height="1dp"/>
-        <solid android:color="#d0d0d0" />
+        <solid android:color="#979797" />
     </shape>
 </inset>
