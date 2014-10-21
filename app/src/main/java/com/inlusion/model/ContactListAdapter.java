@@ -29,6 +29,8 @@ import java.util.Set;
  */
 public class ContactListAdapter extends BaseAdapter implements SectionIndexer, Filterable{
 
+    ViewHolder holder;
+
     private static ArrayList<Contact> contactArrayList;
     private ArrayList<Contact> mStringFilterList;
     private LayoutInflater mInflater;
@@ -72,7 +74,7 @@ public class ContactListAdapter extends BaseAdapter implements SectionIndexer, F
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
+
 
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.contact_entry, null);
@@ -92,6 +94,7 @@ public class ContactListAdapter extends BaseAdapter implements SectionIndexer, F
         }
 
         holder.image.setImageBitmap(contactArrayList.get(position).getImage());
+        //loadImage(position);
         holder.txtName.setText(contactArrayList.get(position).getName());
         holder.txtNumber.setText(contactArrayList.get(position).getNumber());
 
@@ -136,7 +139,7 @@ public class ContactListAdapter extends BaseAdapter implements SectionIndexer, F
         //Invoked in a worker thread to filter the data according to the constraint.
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results=new FilterResults();
+            FilterResults results = new FilterResults();
             if(constraint!=null && constraint.length()>0){
                 ArrayList<Contact> filterList=new ArrayList<Contact>();
                 for(int i=0;i<mStringFilterList.size();i++){
@@ -161,6 +164,30 @@ public class ContactListAdapter extends BaseAdapter implements SectionIndexer, F
             contactArrayList=(ArrayList<Contact>) results.values;
             notifyDataSetChanged();
         }
+    }
+
+    public void loadImage(final int pos){
+        final int position = pos;
+
+        new AsyncTask<ViewHolder, Void, Bitmap>() {
+            private ViewHolder v;
+
+            @Override
+            protected Bitmap doInBackground(ViewHolder... params) {
+                v = params[0];
+                return contactArrayList.get(pos).getImage();
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap result) {
+                super.onPostExecute(result);
+                if (v.position == position) {
+                    // If this item hasn't been recycled already, hide the
+                    // progress and set and show the image
+                    holder.image.setImageBitmap(result);
+                }
+            }
+        }.execute(holder);
     }
 
 

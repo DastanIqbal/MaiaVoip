@@ -55,12 +55,12 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:layout_below="@+id/contactSearchBar"
-        android:layout_above="@+id/imageButton" />
+        android:layout_above="@+id/contacts_addContact_imagebutton" />
 
     <ImageButton
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:id="@+id/imageButton"
+        android:id="@+id/contacts_addContact_imagebutton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/contact_blank_selector"

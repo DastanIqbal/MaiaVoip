@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout"
+        android:background="#f4f4f4">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/editcontact_accept_imagebutton"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_confirm"
+            android:layout_gravity="left|center_vertical"
+            android:scaleType="fitCenter"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/editcontact_menu_imagebutton"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/context_menu_icon"
+            android:layout_gravity="right|center_vertical"
+            android:scaleType="fitCenter"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingRight="7dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:id="@+id/editcontact_contact_linearlayout"
+        android:clickable="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+
+        <com.inlusion.controller.util.RoundedImageView
+            android:layout_width="150dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/editcontact_contact_imageview"
+            android:src="@drawable/contact"
+            android:background="@drawable/contact_blank"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center_vertical"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:clickable="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/textView4"
+                android:textColor="#6f6f6f"
+                android:layout_marginLeft="5dp"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"/>
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:id="@+id/editcontact_imageclear_imagebutton"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_x"
+                android:scaleType="fitCenter"
+                android:paddingBottom="15dp"
+                android:paddingTop="8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="-7dp"/>
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/editcontact_contact_linearlayout"
+        android:background="@android:color/transparent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="fill_parent"
+                android:text="Name"
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#6f6f6f"
+                android:layout_marginLeft="5dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Name Lastname"
+                android:textColorHint="@color/control_grey_idle"
+                android:id="@+id/editcontact_name_edittext"
+                android:textSize="20dp"
+                android:layout_weight="4"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="-5dp"
+                android:background="@drawable/grey_edit_text_holo_light"
+                android:fontFamily="sans-serif-light"/>
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/editcontact_nameclear_imagebutton"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_x"
+                android:scaleType="fitCenter"
+                android:paddingBottom="17dp"
+                android:paddingTop="17dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@android:color/transparent">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="fill_parent"
+                android:text="Phone"
+                android:id="@+id/textView2"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#6f6f6f"
+                android:layout_marginLeft="5dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:id="@+id/editcontact_phone_edittext"
+                android:textSize="20dp"
+                android:layout_weight="4"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="-5dp"
+                android:background="@drawable/grey_edit_text_holo_light"
+                android:fontFamily="sans-serif-light"/>
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/editcontact_phoneclear_imagebutton"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_x"
+                android:scaleType="fitCenter"
+                android:paddingBottom="17dp"
+                android:paddingTop="17dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

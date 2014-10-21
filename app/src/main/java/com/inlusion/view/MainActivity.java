@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.inlusion.controller.outgoing.CallCenter;
+import com.inlusion.controller.util.DebugUtils;
 import com.inlusion.controller.util.RegistrarUtils;
 import com.inlusion.maiavoip.R;
 import com.inlusion.model.Manager;
@@ -29,6 +30,7 @@ public class MainActivity extends FragmentActivity {
     Manager managerClass;
     RegistrarUtils ru;
     CallCenter cc;
+    DebugUtils du;
 
     public SipManager manager;
 
@@ -53,6 +55,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        du = new DebugUtils();
 
         dialerTabButton = (ImageButton) findViewById(R.id.dialerTabButton);
         contactsTabButton = (ImageButton) findViewById(R.id.contactsTabButton);
@@ -211,6 +215,11 @@ public class MainActivity extends FragmentActivity {
                 tabAction(i);
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
+                if(i==1){
+                    du.startRamPrint();
+                }else{
+                    du.stopRamPrint();
+                }
             }
 
 

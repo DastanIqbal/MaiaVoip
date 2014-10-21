@@ -46,6 +46,11 @@ public class ContactEditorActivity extends Activity {
     private String filemanagerstring;
     public Uri selectedImageUri;
 
+    int paddingTop;
+    int paddingRight;
+    int paddingBottom;
+    int paddingLeft;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +72,12 @@ public class ContactEditorActivity extends Activity {
         clearNameButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.control_grey_idle), PorterDuff.Mode.MULTIPLY);
         clearPhoneButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.control_grey_idle), PorterDuff.Mode.MULTIPLY);
         clearImageButton.setEnabled(false);
+
+        paddingTop = contactImageView.getPaddingTop();
+        paddingRight = contactImageView.getPaddingRight();
+        paddingBottom = contactImageView.getPaddingBottom();
+        paddingLeft = contactImageView.getPaddingLeft();
+
         createListeners();
     }
 
@@ -192,19 +203,12 @@ public class ContactEditorActivity extends Activity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("REQUEST="+requestCode+", RESULT="+resultCode);
+
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 selectedImageUri = data.getData();
                 filemanagerstring = selectedImageUri.getPath();
                 selectedImagePath = getPath(selectedImageUri);
-
-//                //NOW WE HAVE OUR WANTED STRING
-//                if(selectedImagePath!=null) {
-//                    //System.out.println("selectedImagePath is the right one for you!");
-//                    setContactImageByUri(selectedImageUri);
-//                    contactImageView.setOval(true);
-//                }
 
             }else if(requestCode == CROP_PICTURE){
                 contactImageView.setOval(true);
@@ -214,6 +218,8 @@ public class ContactEditorActivity extends Activity {
             }
             clearImageButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.control_grey_idle), PorterDuff.Mode.MULTIPLY);
             clearImageButton.setEnabled(true);
+        }else{
+            contactImageView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
         }
     }
 
@@ -267,7 +273,7 @@ public class ContactEditorActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         contactImageView.setOval(false);
-                        contactImageView.setPadding(0,120,0,120);
+                        contactImageView.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
                         contactImageView.setImageResource(R.drawable.contact);
                         clearImageButton.getDrawable().mutate().setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY);
                         clearImageButton.setEnabled(false);
