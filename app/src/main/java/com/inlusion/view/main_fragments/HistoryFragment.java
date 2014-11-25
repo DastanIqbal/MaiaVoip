@@ -12,8 +12,11 @@ import com.inlusion.controller.util.HistoryUtils;
 import com.inlusion.maiavoip.R;
 import com.inlusion.model.HistoryListAdapter;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
- * Created by root on 14.10.2.
+ * Created by Linas Martusevicius on 14.10.2.
  */
 public class HistoryFragment extends Fragment {
 
@@ -30,7 +33,7 @@ public class HistoryFragment extends Fragment {
         hla = new HistoryListAdapter(getActivity(), hu.getDummyHistoryList());
 
         listView.setAdapter(hla);
-
         return rootView;
     }
+
 }

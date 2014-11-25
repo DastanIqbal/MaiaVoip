@@ -1,6 +1,5 @@
 package com.inlusion.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -17,20 +16,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.inlusion.controller.outgoing.CallCenter;
-import com.inlusion.controller.util.DebugUtils;
 import com.inlusion.controller.util.RegistrarUtils;
+import com.inlusion.controller.util.ToneUtils;
 import com.inlusion.maiavoip.R;
 import com.inlusion.model.Manager;
 import com.inlusion.view.main_fragments.ViewPagerAdapter;
 
 /**
- * Created by root on 14.10.2.
+ * Created by Linas Martusevicius on 14.10.2.
+ * The Applications main activity, in charge of the fragments.
  */
 public class MainActivity extends FragmentActivity {
     Manager managerClass;
     RegistrarUtils ru;
     CallCenter cc;
-    DebugUtils du;
+    ToneUtils tu;
 
     public SipManager manager;
 
@@ -56,7 +56,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        du = new DebugUtils();
+        tu = ToneUtils.getInstance();
 
         dialerTabButton = (ImageButton) findViewById(R.id.dialerTabButton);
         contactsTabButton = (ImageButton) findViewById(R.id.contactsTabButton);
@@ -68,7 +68,7 @@ public class MainActivity extends FragmentActivity {
 
         vpa = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(vpa);
-        viewPager.setOffscreenPageLimit(0);
+        viewPager.setOffscreenPageLimit(3);
         setPagerListener();
 
         ViewTreeObserver vto = dialerTabButton.getViewTreeObserver();
@@ -76,7 +76,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onGlobalLayout() {
                 dialerTabButton.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                int width1  = dialerTabButton.getMeasuredWidth();
+                int width1 = dialerTabButton.getMeasuredWidth();
                 activeTabIndicator.getLayoutParams().width = width1;
             }
         });
@@ -97,7 +97,6 @@ public class MainActivity extends FragmentActivity {
 
         initProfile();
         initCallCenter();
-
         cc.run();
     }
 
@@ -107,7 +106,10 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-    public void initTabButtonListeners(){
+    /**
+     * Initializes the listeners responsible for switching pager tabs and animating the marker.
+     */
+    public void initTabButtonListeners() {
         dialerButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,32 +146,57 @@ public class MainActivity extends FragmentActivity {
         settingsTabButton.setOnClickListener(settingsButtonListener);
     }
 
-    public int getDistanceToLeftEdge(View i){
-        int distance = i.getLeft();
-        return distance;
+    /**
+     * Returns the pager marker's distance to the left edge of the device's screen in pixels.
+     *
+     * @param v the View from which to measure.
+     * @return distance from the marker to the left edge of screen.
+     */
+    public int getDistanceToLeftEdge(View v) {
+        return v.getLeft();
     }
 
-    public void animateIndicator(int x2){
+    /**
+     * Animates the pager's tab marker, translates it to the correct X position on the screen.
+     *
+     * @param x2 the x coordinate location to which the marker should move in pixels.
+     */
+    public void animateIndicator(int x2) {
         int x1 = getLastIndicatorLoc();
-        TranslateAnimation ta = new TranslateAnimation(x1,x2,0,0);
+        TranslateAnimation ta = new TranslateAnimation(x1, x2, 0, 0);
         ta.setDuration(250);
         ta.setFillAfter(true);
+        ta.setFillEnabled(true);
         activeTabIndicator.startAnimation(ta);
     }
 
-    public int getLastIndicatorLoc(){
+    /**
+     * Get the previous location of the pager's tab indicator.
+     *
+     * @return the last location (x coordinate) of the pager's tab indicator.
+     */
+    public int getLastIndicatorLoc() {
         return lastIndicatorLoc;
     }
 
-    public void repaintTabIcons(){
+    /**
+     * Resets the pager's tab icons to their original dark grey color.
+     */
+    public void repaintTabIcons() {
         dialerTabButton.getDrawable().mutate().setColorFilter(Color.rgb(89, 90, 92), PorterDuff.Mode.MULTIPLY);
         contactsTabButton.getDrawable().mutate().setColorFilter(Color.rgb(89, 90, 92), PorterDuff.Mode.MULTIPLY);
         historyTabButton.getDrawable().mutate().setColorFilter(Color.rgb(89, 90, 92), PorterDuff.Mode.MULTIPLY);
         settingsTabButton.getDrawable().mutate().setColorFilter(Color.rgb(89, 90, 92), PorterDuff.Mode.MULTIPLY);
     }
 
-    public void tabAction(int i){
-        switch (i){
+    /**
+     * The logic by which the pager's tab selection works.
+     * Used by the pager listener.
+     *
+     * @param i the item of the pager to be displayed.
+     */
+    public void tabAction(int i) {
+        switch (i) {
             case 0:
                 animateIndicator(getDistanceToLeftEdge(dialerTabButton));
                 lastIndicatorLoc = getDistanceToLeftEdge(dialerTabButton);
@@ -199,27 +226,25 @@ public class MainActivity extends FragmentActivity {
                 viewPager.setCurrentItem(3);
                 return;
             default:
-                return;
         }
     }
 
-    void setPagerListener(){
-        pagerListener = new ViewPager.OnPageChangeListener(){
+    /**
+     * Creates and sets the pager's OnPageChangeListener.
+     */
+    void setPagerListener() {
+        pagerListener = new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
-
+                tu.stopTone();
             }
 
             @Override
             public void onPageSelected(int i) {
+                tu.stopTone();
                 tabAction(i);
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
-                if(i==1){
-                    du.startRamPrint();
-                }else{
-                    du.stopRamPrint();
-                }
             }
 
 
@@ -231,7 +256,10 @@ public class MainActivity extends FragmentActivity {
         viewPager.setOnPageChangeListener(pagerListener);
     }
 
-    private void initProfile(){
+    /**
+     * Opens the local user's SipProfile for communication.
+     */
+    private void initProfile() {
         try {
             manager.open(managerClass.getActiveLocalProfile());
 
@@ -239,19 +267,26 @@ public class MainActivity extends FragmentActivity {
             ru.setProfile(managerClass.getActiveLocalProfile());
             ru.setRegListener(managerClass.getRegistrationListener());
 
-            System.out.println("=== PROFILE IS OPEN: "+manager.isOpened(managerClass.getActiveLocalProfile().getUriString()));
-        }catch (SipException sipex){
+            System.out.println("=== PROFILE IS OPEN: " + manager.isOpened(managerClass.getActiveLocalProfile().getUriString()));
+        } catch (SipException sipex) {
             System.out.println("--- SIPEX IN START ACTIVITY ON CREATE");
             sipex.printStackTrace();
         }
     }
 
-    private void initCallCenter(){
+    /**
+     * Initializes the CallCenter and sets it's parameters accordingly.
+     */
+    private void initCallCenter() {
         cc.setLocalProfile(managerClass.getActiveLocalProfile());
         cc.setManager(managerClass.getSipManager());
     }
 
+    /**
+     * @return the current instance of RegistrarUtils in use by the MainActivity class.
+     */
     public RegistrarUtils getRu() {
         return ru;
     }
+
 }

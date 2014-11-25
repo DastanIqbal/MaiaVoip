@@ -14,20 +14,20 @@
         android:background="@color/maia_pink">
 
         <ImageView
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/imageView"
-            android:layout_weight="5"
+            android:layout_weight="2"
             android:src="@drawable/ic_search"
             android:scaleType="fitCenter"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"/>
 
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/contactsFilter"
-            android:layout_weight="1"
+            android:layout_weight="7"
             android:singleLine="true"
             android:textColor="@android:color/white"
             android:background="@drawable/white_textfield_activated_holo_light"
@@ -35,6 +35,19 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:hint="Search contacts..."/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/contacts_clear_filter_imagebutton"
+            android:layout_weight="1"
+            android:src="@drawable/ic_x"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="5dp"/>
     </LinearLayout>
 
     <ListView
@@ -49,7 +62,7 @@
         android:smoothScrollbar="true"
         android:divider="@drawable/horizontal_divider"
         android:scrollbarStyle="insideOverlay"
-        android:paddingRight="7dp"
+        android:paddingRight="2dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="2dp"

@@ -7,15 +7,17 @@ import android.net.sip.SipException;
 import android.net.sip.SipManager;
 import android.net.sip.SipProfile;
 
-import com.inlusion.maiavoip.StartActivity;
-import com.inlusion.model.CurrentState;
+import com.inlusion.controller.util.ToneUtils;
+import com.inlusion.model.Status;
 import com.inlusion.view.IncomingCallActivity;
 import com.inlusion.view.OnCallActivity;
 
 /**
  * Created by Linas Martusevicius on 14.9.18.
+ * Main SipAudioCall operation class.
  */
-public class CallCenter implements Runnable{
+public class CallCenter implements Runnable {
+    ToneUtils tu;
 
     public boolean isRunning;
     private SipProfile localProfile;
@@ -30,149 +32,208 @@ public class CallCenter implements Runnable{
 
     private static CallCenter instance = null;
 
-    CurrentState cs;
     Intent intentOC;
     Intent intentIC;
+
+    Status status;
 
     @Override
     public void run() {
         isRunning = true;
-        cs = CurrentState.getInstance();
+        tu = ToneUtils.getInstance();
         intentOC = new Intent(ctx, OnCallActivity.class);
         intentIC = new Intent(ctx, IncomingCallActivity.class);
         createCallListener();
         isRunning = false;
+        status = new Status(0);
     }
 
-    public CallCenter(Context ctx){
+    /**
+     * Class for main call operations.
+     *
+     * @param ctx The context from which the CallCenter operates.
+     */
+    public CallCenter(Context ctx) {
         this.ctx = ctx;
     }
 
-    public static CallCenter getInstance(){
-        if(instance == null) {
+    /**
+     * Singleton constructor.
+     *
+     * @return an instance of the CallCenter.
+     */
+    public static CallCenter getInstance() {
+        if (instance == null) {
             instance = new CallCenter(ctx);
         }
         return instance;
     }
 
-    public void createCallListener(){
+    /**
+     * Creates and sets a SipAudioCall.Listener to handle all SIP events.
+     */
+    public void createCallListener() {
         callListener = new SipAudioCall.Listener() {
-
             @Override
             public void onRinging(SipAudioCall call, SipProfile caller) {
                 super.onRinging(call, caller);
-                System.out.println("+++ RING");
-                ctx.startActivity(intentIC);
-                try{
-                call.answerCall(30);
-                }catch(SipException sipex){
+                status.setStatus(Status.RING);
+                try {
+                    call.answerCall(30);
+                } catch (SipException sipex) {
                     sipex.printStackTrace();
                 }
+                System.out.println("+++ RING");
             }
 
             @Override
             public void onRingingBack(SipAudioCall call) {
                 super.onRingingBack(call);
-                System.out.println("+++ RING BACK");
+                status.setStatus(Status.RING_BACK);
+                tu.setDialing(true);
+                tu.startDialTone();
                 setCurrentCall(call);
+                //System.out.println("+++ RING BACK");
             }
 
             @Override
             public void onCalling(SipAudioCall call) {
                 super.onCalling(call);
-                System.out.println("+++ CALLING");
+                startOnCallActivity();
+                status.setStatus(Status.CALLING);
                 setCurrentCall(call);
                 currentPeerCallerID = call.getPeerProfile().getDisplayName();
                 currentPeerCallerNumber = call.getPeerProfile().getUserName();
-                startOnCallActivity();
+                //System.out.println("+++ CALLING");
             }
 
             @Override
             public void onCallEstablished(SipAudioCall call) {
                 super.onCallEstablished(call);
-                //startOnCallActivity();
-                System.out.println("+++ CALL ESTABLISHED");
+                tu.setDialing(false);
+                tu.stopTone();
                 call.startAudio();
-
-                System.out.println("=== IS MUTED?: "+call.isMuted());
-                if(call.isMuted()) {
+                if (call.isMuted()) {
                     call.toggleMute();
                 }
                 currentPeerCallerID = call.getPeerProfile().getDisplayName();
                 currentPeerCallerNumber = call.getPeerProfile().getUserName();
                 setCurrentCall(call);
-
-
+                status.setStatus(Status.CALL_ESTABLISHED);
+                //System.out.println("+++ CALL ESTABLISHED");
             }
 
             @Override
             public void onError(SipAudioCall call, int errorCode, String errorMessage) {
-                cs.setStatus(0);
+                setCurrentCall(null);
+                status.setStatus(Status.ERROR);
+                tu.setDialing(false);
+                tu.stopTone();
+                tu.playDropTone();
+                System.out.println("+++ ERROR " + '[' + errorCode + ']' + ", " + errorMessage);
             }
 
             @Override
             public void onCallEnded(SipAudioCall call) {
                 setCurrentCall(null);
+                status.setStatus(Status.ENDED);
                 currentPeerCallerID = null;
                 currentPeerCallerNumber = null;
-                System.out.println("+++ CALL ENDED");
+                tu.setDialing(false);
+                tu.stopTone();
+                tu.playDropTone();
+                //System.out.println("+++ CALL ENDED");
+            }
+
+            @Override
+            public void onCallBusy(SipAudioCall call) {
+                super.onCallBusy(call);
+                setCurrentCall(null);
+                status.setStatus(Status.BUSY);
+                tu.setDialing(false);
+                tu.stopTone();
+                tu.playDropTone();
+                //System.out.println("+++ CALL BUSY");
             }
         };
     }
 
-    public void setLocalProfile(SipProfile profile){
+    /**
+     * Sets the SipProfile for the local user.
+     *
+     * @param profile the SipProfile to be set.
+     */
+    public void setLocalProfile(SipProfile profile) {
         this.localProfile = profile;
     }
 
-    public void setManager(SipManager manager){
+    /**
+     * Sets the SipManager that handles main call and profile operations.
+     *
+     * @param manager the manager to be set.
+     */
+    public void setManager(SipManager manager) {
         this.manager = manager;
     }
 
-    public void requestCall(String to){
-        try{
-            manager.makeAudioCall(localProfile.getUriString(),"sip:"+to+"@192.168.1.140",callListener,30);
-            //manager.makeAudioCall(localProfile.getUriString(),"sip:3726189105@91.203.29.131",callListener,30);
-        }catch(SipException sipex){
+    /**
+     * Initiates an audio call with the supplied peer profile name.
+     *
+     * @param to the SIP account name to call.
+     */
+    public void requestCall(String to) {
+        try {
+            manager.makeAudioCall(localProfile.getUriString(), "sip:" + "linaszoiper" + "@192.168.1.140", callListener, 30);
+        } catch (SipException sipex) {
             System.err.println("--- SIPEX in: controller.CallCenter=>requestCall" + sipex.getMessage());
             sipex.printStackTrace();
         }
     }
 
-    public void setCurrentCall(SipAudioCall aCall){
+    /**
+     * Sets the current call for use in child classes.
+     *
+     * @param aCall the current call.
+     */
+    public void setCurrentCall(SipAudioCall aCall) {
         this.call = aCall;
     }
 
-    public void endCurrentCall(){
+    /**
+     * Ends current call.
+     */
+    public void endCurrentCall() {
         try {
             call.endCall();
 
-        }catch(SipException sipex){
+        } catch (SipException sipex) {
             sipex.printStackTrace();
         }
     }
 
-    public SipManager getManager(){
-        return manager;
-    }
-
-    public void setContext(Context ctx){
+    /**
+     * Sets the current context.
+     *
+     * @param ctx the context to be set.
+     */
+    public void setContext(Context ctx) {
         this.ctx = ctx;
     }
 
-    public void startOnCallActivity(){
+    /**
+     * Starts the OnCallActivity with the current set context.
+     */
+    public void startOnCallActivity() {
         ctx.startActivity(intentOC);
     }
 
-    public boolean getState(){
-        return isRunning;
-    }
-
-    public SipAudioCall.Listener getCallListener(){
-        return callListener;
-    }
-
-    public String getCurrentPeerCallerID(){
-        return currentPeerCallerID;
+    /**
+     * Returns the current Status (Observable) object of the SipListener.
+     *
+     * @return
+     */
+    public Status getStatus() {
+        return status;
     }
 
 }

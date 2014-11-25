@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="scrollthumb_size_width">10dp</dimen>
+    <dimen name="scrollthumb_size_height">10dp</dimen>
+    <dimen name="scrollthumb_padding_right">4dp</dimen>
+    <dimen name="scrollthumb_padding_top_bottom">4dp</dimen>
+</resources>

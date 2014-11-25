@@ -9,11 +9,6 @@
     android:paddingBottom="0dp"
     tools:context="com.inlusion.view.MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <ImageButton
         android:background="@drawable/contact_blank_selector"
         android:layout_width="fill_parent"
@@ -459,6 +454,15 @@
     </LinearLayout>
     <!--DIALER KEYS END-->
 
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/filteredUserList"
+        android:layout_above="@+id/dialer_inputLinearLayout"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/dialer_inputLinearLayout"
+        android:background="@color/grey_F4F4F4"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -466,7 +470,7 @@
         android:layout_height="55dp"
         android:layout_above="@+id/dialerVertLinearLayout"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout">
+        android:id="@+id/dialer_inputLinearLayout">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -493,10 +497,7 @@
             android:textAlignment="center"
             android:background="@android:color/white"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:textSelectHandle="@drawable/maia_text_select_handle_middle"
-            android:textSelectHandleLeft="@drawable/maia_text_select_handle_left"
-            android:textSelectHandleRight="@drawable/maia_text_select_handle_right"/>
+            android:paddingRight="5dp"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -511,11 +512,8 @@
 
     </LinearLayout>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/filteredUserList"
-        android:layout_above="@+id/linearLayout"
-        android:layout_centerHorizontal="true" />
+
+
+
 
 </RelativeLayout>

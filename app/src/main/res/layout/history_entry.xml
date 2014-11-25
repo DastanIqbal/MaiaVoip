@@ -18,8 +18,8 @@
         android:layout_height="fill_parent">
 
     <com.inlusion.controller.util.RoundedImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/history_contactImage"
         android:src="@drawable/incoming_call_caller"
         android:scaleType="fitXY"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="Linas Mpqpqpartuseius"
             android:id="@+id/history_contactName"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:fontFamily="sans-serif-light"
             android:layout_marginBottom="0dp"
             android:layout_weight="1"/>
@@ -50,9 +50,10 @@
             android:layout_height="wrap_content"
             android:text="+370 679 43120"
             android:id="@+id/history_contactNumber"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textColor="#adadad"
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="-3dp"
+            android:layout_marginTop="-3dp"
             android:layout_weight="1"/>
 
     <LinearLayout
@@ -62,8 +63,8 @@
         android:layout_weight="1">
         <ImageView
             android:id="@+id/history_arrow"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/arrow_call_in"
             android:scaleType="fitCenter"
             android:layout_marginRight="5dp"
@@ -73,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="\@ 00:00"
             android:id="@+id/history_time"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textColor="#adadad"/>
     </LinearLayout>
     </LinearLayout>

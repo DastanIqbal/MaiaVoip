@@ -13,7 +13,7 @@
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout"
+        android:id="@+id/dialer_inputLinearLayout"
         android:background="#f4f4f4">
 
         <ImageButton
@@ -52,7 +52,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="300dp"
-        android:layout_below="@+id/linearLayout"
+        android:layout_below="@+id/dialer_inputLinearLayout"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:background="@android:color/transparent"

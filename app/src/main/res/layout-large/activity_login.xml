@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/maia_logo" />
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="fill_parent"
+        android:layout_height="20px"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <EditText
+        android:id="@+id/usernameEditText"
+        style="@style/whiteTextField"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/space2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:hint="Username"
+        android:singleLine="true"
+        android:textSize="25dp" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        style="@style/whiteTextField"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/login_errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startImageButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="Incorrect password!"
+        android:textColor="@color/maia_pink"
+        android:textSize="20dp"
+        android:visibility="invisible" />
+
+
+    <com.inlusion.controller.util.RoundedImageView
+        android:id="@+id/startImageButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/contact_blank"
+        android:paddingBottom="22dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="18dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/power"
+        app:oval="true" />
+
+
+    <RelativeLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120dp">
+
+
+        <ProgressBar
+            android:id="@+id/validation_progressBar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminateDrawable="@anim/progress_round"
+            android:padding="6dp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

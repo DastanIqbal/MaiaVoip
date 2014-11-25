@@ -1,20 +1,20 @@
 package com.inlusion.view.main_fragments;
 
 /**
- * Created by root on 14.10.2.
+ * Created by Linas Martusevicius on 14.10.2.
+ *
+ * FragmentPagerAdapter extended implementation of a ViewPager.
  */
-import android.content.Context;
+
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.inlusion.view.MainActivity;
-
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     final int PAGE_COUNT = 4;
-    // Tab Titles
-    private String tabtitles[] = new String[] { "DIALER", "CONTACTS", "HISTORY","SETTINGS" };
+    private String tabtitles[] = new String[]{"DIALER", "CONTACTS", "HISTORY", "SETTINGS"};
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -36,6 +36,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 return cf;
             case 2:
                 HistoryFragment hf = new HistoryFragment();
+                final Bundle args = new Bundle();
+                args.putString("TAG", "history_fragment");
+                hf.setArguments(args);
                 return hf;
             case 3:
                 SettingsFragment sf = new SettingsFragment();
@@ -49,5 +52,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabtitles[position];
     }
+
 
 }

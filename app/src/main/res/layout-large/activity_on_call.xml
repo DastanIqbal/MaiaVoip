@@ -26,7 +26,7 @@
         android:paddingBottom="5dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/on_call_drop"
-        android:id="@+id/linearLayout"
+        android:id="@+id/dialer_inputLinearLayout"
         android:background="@android:color/white">
 
         <ImageButton
@@ -90,7 +90,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
-        android:layout_above="@+id/linearLayout">
+        android:layout_above="@+id/dialer_inputLinearLayout">
 
             <Chronometer
                 android:layout_width="wrap_content"
@@ -112,21 +112,27 @@
                 android:src="@drawable/incoming_call_caller_large"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Linas Martusevicius"
                 android:id="@+id/on_call_caller_name"
                 android:layout_below="@+id/on_call_caller_image"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
                 android:textSize="50dp"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="+370 679 43120"
                 android:id="@+id/on_call_caller_number"
                 android:layout_below="@+id/on_call_caller_name"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:textSize="35dp"

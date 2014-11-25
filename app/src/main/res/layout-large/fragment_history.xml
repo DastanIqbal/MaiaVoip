@@ -12,12 +12,13 @@
         android:layout_height="fill_parent"
         android:id="@+id/history_listView"
         android:background="@android:color/white"
+        android:layout_centerHorizontal="true"
         android:fastScrollEnabled="true"
         android:fastScrollAlwaysVisible="true"
-        android:theme="@style/_maia_history"
+        android:theme="@style/_maia"
         android:smoothScrollbar="true"
         android:divider="@drawable/horizontal_divider"
-        android:scrollbarStyle="outsideInset"
+        android:scrollbarStyle="insideOverlay"
         android:overScrollMode="never"
         android:scrollingCache="false"
         android:isScrollContainer="false"
@@ -26,9 +27,5 @@
         android:footerDividersEnabled="true"
         android:paddingRight="3dp"
         android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:paddingBottom="2dp"/>
 </RelativeLayout>

@@ -2,9 +2,12 @@ package com.inlusion.view.main_fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
@@ -27,8 +30,11 @@ import com.inlusion.model.Contact;
 import com.inlusion.model.ContactListAdapter;
 import com.inlusion.view.ContactEditorActivity;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by Linas Martusevicius on 14.10.2.
+ * The ContactsFragment logic implementation.
  */
 public class ContactsFragment extends Fragment {
 
@@ -55,10 +61,13 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_contacts, container, false);
-        cu = new ContactUtils(getActivity());
+
         listView = (ListView) rootView.findViewById(R.id.contact_listView);
-        cla = new ContactListAdapter(getActivity(), cu.getContactNameNumberArray());
+
+        cu = ContactUtils.getInstance(getActivity());
+        cla = new ContactListAdapter(getActivity(), cu.getContactList());
         listView.setAdapter(cla);
+        cla.notifyDataSetChanged();
         listView.setTextFilterEnabled(true);
 
         contactFilter = (EditText) rootView.findViewById(R.id.contactsFilter);
@@ -74,6 +83,14 @@ public class ContactsFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * Creates and sets listeners for touch events in the ContactsFragment.
+     */
     public void createListeners(){
 
         contactFilter_ocl = new View.OnClickListener() {
@@ -117,7 +134,16 @@ public class ContactsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Contact c = (Contact) listView.getAdapter().getItem(position);
-                //System.out.println("PRESSED="+position+", NAME="+c.getName());
+                try {
+                    Intent addContactIntent = new Intent(getActivity().getApplicationContext(), ContactEditorActivity.class);
+                    addContactIntent.putExtra("name", c.getName());
+                    addContactIntent.putExtra("number", c.getNumber());
+                    addContactIntent.putExtra("image", c.getImage());
+
+                    startActivity(addContactIntent);
+                }catch(Exception fnfex){
+                fnfex.printStackTrace();
+                }
             }
         };
 
@@ -135,14 +161,11 @@ public class ContactsFragment extends Fragment {
                 boolean defaultResult = v.onTouchEvent(event);
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        clearFilterImageButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.control_white_pressed), PorterDuff.Mode.MULTIPLY);
-//                        clearFilterImageButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.control_pink_pressed), PorterDuff.Mode.MULTIPLY);
+                        clearFilterImageButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.white_FFFFFF), PorterDuff.Mode.MULTIPLY);
                         break;
                     case MotionEvent.ACTION_UP:
                         contactFilter.setText("");
                         clearFilterImageButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.control_pink_idle), PorterDuff.Mode.MULTIPLY);
-
-//                        clearFilterImageButton.getDrawable().mutate().setColorFilter(getResources().getColor(R.color.control_white_idle), PorterDuff.Mode.MULTIPLY);
                         break;
                     default:
                         return defaultResult;

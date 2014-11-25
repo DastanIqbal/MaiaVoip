@@ -5,7 +5,10 @@
     <color name="maia_blue_pressed">#0085da</color>
 
     <color name="control_pink_idle">#ff86c8</color>
-    <color name="control_white_pressed">#FFFFFF</color>
+
     <color name="control_grey_idle">#ACACAC</color>
     <color name="control_grey_pressed">#595A5C</color>
+
+    <color name="grey_F4F4F4">#F4F4F4</color>
+    <color name="white_FFFFFF">#FFFFFF</color>
 </resources>

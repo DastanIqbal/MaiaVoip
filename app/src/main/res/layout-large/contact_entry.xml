@@ -11,7 +11,9 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingBottom="5dp"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:id="@+id/contact_entry_LinearLayout"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:orientation="horizontal"

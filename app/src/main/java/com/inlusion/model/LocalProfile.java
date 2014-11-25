@@ -5,7 +5,9 @@ import android.net.sip.SipProfile;
 import java.text.ParseException;
 
 /**
- * Created by root on 14.9.18.
+ * Created by Linas Martusevicius on 14.9.18.
+ * The local profile model object to hold all info of the client's local profile.
+ * Settin
  */
 public class LocalProfile {
     private static LocalProfile instance = null;
@@ -19,13 +21,23 @@ public class LocalProfile {
     private String mPass;
     private String mDomain;
 
-    public LocalProfile(String uname, String pass, String domain){
+    /**
+     * Default constructor for the LocalProfile object.
+     *
+     * @param uname  a String username/number parameter of the local SIP account.
+     * @param pass   a String password parameter of the local SIP account.
+     * @param domain a String address parameter of the SIP service provider's server (registrar).
+     */
+    public LocalProfile(String uname, String pass, String domain) {
         this.mUname = uname;
         this.mPass = pass;
         this.mDomain = domain;
     }
 
-    public void createLocalProfile(){
+    /**
+     * Builds the local SipProfile and sets the parameters accordingly.
+     */
+    public void createLocalProfile() {
         try {
             SipProfile.Builder builder = new SipProfile.Builder(mUname, mDomain);
             builder.setAuthUserName(mUname);
@@ -35,15 +47,17 @@ public class LocalProfile {
             builder.setAutoRegistration(false);
             builder.setDisplayName("LINAS-ANDROID");
             builder.setPort(5060);
-            //builder.setOutboundProxy("192.168.1.140");
             mLocalProfile = builder.build();
-        }catch(ParseException pe){
-            System.err.println("--- ERROR IN model.LocalProfile=>createLocalProfile(): "+pe.getMessage());
+        } catch (ParseException pe) {
+            System.err.println("--- ERROR IN model.LocalProfile=>createLocalProfile(): " + pe.getMessage());
             pe.printStackTrace();
         }
         System.out.println("+++ LOCAL PROFILE CREATED= " + mLocalProfile.getUriString());
     }
 
+    /**
+     * @return the SipProfile object of the local user/client.
+     */
     public SipProfile getLocalProfile() {
         return mLocalProfile;
     }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white_FFFFFF">
+
+    <ProgressBar
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:id="@+id/loadingProgressBar"
+        style="@style/ProgressBarprogress"
+        android:layout_marginBottom="344dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/maia_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="150dp"
+        android:scaleType="fitCenter"/>
+</RelativeLayout>

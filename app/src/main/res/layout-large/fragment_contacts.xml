@@ -51,7 +51,6 @@
             android:paddingBottom="19dp"
             android:layout_marginRight="23dp"
             android:layout_marginLeft="5dp"/>
-
     </LinearLayout>
 
     <ListView
@@ -67,7 +66,6 @@
         android:divider="@drawable/horizontal_divider"
         android:scrollbarStyle="insideOverlay"
         android:layout_below="@+id/contactSearchBar"
-        android:overScrollMode="never"
         android:scrollingCache="false"
         android:isScrollContainer="false"
         android:focusable="true"

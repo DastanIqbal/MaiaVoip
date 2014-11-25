@@ -29,7 +29,6 @@ public class HistoryListAdapter extends BaseAdapter{
     public HistoryListAdapter(Context context, ArrayList<HistoryContact> history) {
         this.historyArrayList = history;
         mInflater = LayoutInflater.from(context);
-
     }
 
     public int getCount() {
@@ -86,5 +85,7 @@ public class HistoryListAdapter extends BaseAdapter{
         ImageView outcome;
         TextView txtTime;
     }
+
+
 
 }

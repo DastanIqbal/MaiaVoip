@@ -3,6 +3,6 @@
     android:insetLeft="20dp"
     android:insetRight="20dp">
     <shape xmlns:android="http://schemas.android.com/apk/res/android">
-        <solid android:color="#979797" />
+        <solid android:color="#676767" />
     </shape>
 </inset>
